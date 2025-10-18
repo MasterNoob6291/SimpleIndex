@@ -570,8 +570,16 @@ end)
 
 -- EXECUTE COMMAND
 TextBox.FocusLost:Connect(function(enterPressed)
-	if not enterPressed then return end
+	-- Prevent random close from Roblox auto-blur
+	if not isOpen then return end
+
 	local inputText = TextBox.Text
+
+	if not enterPressed then
+		-- Don’t close if player clicked away or focus bug triggered
+		TextBox:CaptureFocus()
+		return
+	end
 
 	if inputText:sub(1, #PREFIX) ~= PREFIX then
 		closeBar()
