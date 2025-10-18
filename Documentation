@@ -38,10 +38,12 @@ If you type "-cmds" and check console it will have the example command followed 
 
 Auto completes are a list of commands you can type to help you auto complete a command.
 Lets say you type part of the example command "-exa" The auto complete will show "-example" following by anything that starts with "-exa"
+You can press space and it will complete the first auto complete that it thinks you were trying to type.
 The module does this for you, but what if you wanted to create auto completes for arguments.
 For example "-kick" and then you want to auto complete usernames in the game for players to kick.
 Well you can do that using the Auto Complete function:
 
+local Players = game.Players()
 SimpleIndex.AutocompleteTypes.player = SimpleIndex.AutocompleteTypes.simple(function(input, used)
 	local matches = {}
 
