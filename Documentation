@@ -1,4 +1,96 @@
 Simple Index is a basic tool to help you with creating commands easily in Roblox.
+Use "-" to open the Command bar.
 
 Here is the module:
 local SimpleIndex = loadstring(game:HttpGet("https://raw.githubusercontent.com/MasterNoob6291/SimpleIndex/refs/heads/main/SimpleIndex.lua"))()
+
+---------------------- COMMMANDS ----------------------
+Creating commands are pretty simple and take little effort.
+Here is an example:
+
+SimpleIndex.command("example", function(args)
+  -- Function inside of here
+end, "Example command")
+
+Running this after the Module will create an Example command.
+So, typing: "-example" will exacute the command.
+
+-- Arguments --
+These commands can take in Arguments. The args parameter is a table.
+For example, this will output the first argument you type after the command:
+
+SimpleIndex.command("example", function(args)
+  print(args[1])
+end, "Example command")
+
+So, lets say you type "-example Hello"
+This will print "Hello" in the console.
+
+-- Description --
+
+The description is the first part after the end.
+If you type "-cmds" in the Command bar you will get a list of commands along with their descriptions.
+Descriptions can be useful to tell your player how the command works.
+For example the description of the example command is "Example command"
+If you type "-cmds" and check console it will have the example command followed by the description.
+
+---------------------- AutoCompletes ----------------------
+
+Auto completes are a list of commands you can type to help you auto complete a command.
+Lets say you type part of the example command "-exa" The auto complete will show "-example" following by anything that starts with "-exa"
+The module does this for you, but what if you wanted to create auto completes for arguments.
+For example "-kick" and then you want to auto complete usernames in the game for players to kick.
+Well you can do that using the Auto Complete function:
+
+SimpleIndex.AutocompleteTypes.player = SimpleIndex.AutocompleteTypes.simple(function(input, used)
+	local matches = {}
+
+	for _, plr in ipairs(Players:GetPlayers()) do
+		local name = plr.Name
+		if name:lower():sub(1, #input) == input:lower() and not used[name:lower()] then
+			table.insert(matches, name)
+		end
+	end
+
+	for _, special in ipairs({ "me", "others", "random", "all" }) do
+		if special:sub(1, #input) == input:lower() and not used[special] then
+			table.insert(matches, special)
+		end
+	end
+
+	return matches
+end)
+
+This does exactly that.
+This creates a list of matches, or in this case players to auto complete.
+The "input" argument is an argument you typed in after the command. (The "used" argument is not important for this function)
+So how do you use it.
+Lets say you want to kick the username of a player.
+
+SimpleIndex.command("kick", function(args)
+	if args == nil then return end
+	for i, v in pairs(SimpleIndex.getTargetPlayers(args[1])) do
+		print("Kicking:", v)
+	end
+end, "Kicks player.", { [1] = "player" })
+
+The "{ [1] = "player" }" after the description is how to use it.
+You call the AutoComplete shown above and the "[1]" is the argument place you picked. So "[1]" is the first argument after the command.
+To create another Auto Complete you can change the AutocompleteTypes.player to AutocompleteTypes. -- What ever you want afterwards.
+
+-- Extras --
+In the kick command example we had a "getTargetPlayers" function.
+This is here to make it simple to do things like kick. It takes in a string and gets a table of players from it.
+That means it can take in "all" "others" "random" or "me" along with typing PART of someones username. 
+You do not have to type someones full username for this function to work. 
+
+---------------------- NOTIFICATIONS ----------------------
+Notifications are boxes that to notify the player something.
+For example:
+
+SimpleIndex.Notify("Example Heading", "Example Message", 3)
+
+The first string is your Heading. So "Error" or "Warning"
+The second is the message. So "Something went wrong" for example.
+The last argument is the time the notification will stay visible.
+
