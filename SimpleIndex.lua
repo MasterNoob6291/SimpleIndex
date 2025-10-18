@@ -638,3 +638,4 @@ return {
     Notify = Notify,
     getTargetPlayers = getTargetPlayers
 }
+print("SimpleIndex Loaded! - Version 1.1")
