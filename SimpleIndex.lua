@@ -103,10 +103,20 @@ local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.
 local floatOffset = -0.04
 local finalY = 0.05
 
+local isAnimating = false
+local closeTween -- store reference so we can cancel
+
 local function openBar()
+	if isAnimating then return end
 	isOpen = true
 	Main.Visible = true
 	Main.Position = UDim2.new(0.5, 0, finalY + floatOffset, 0)
+
+	-- If a close tween was running, cancel it
+	if closeTween then
+		closeTween:Cancel()
+		closeTween = nil
+	end
 
 	local tweens = {
 		TweenService:Create(Main, tweenInfo, {
@@ -120,13 +130,19 @@ local function openBar()
 		TweenService:Create(AmbientShadow, tweenInfo, { ImageTransparency = 0.8 }),
 	}
 
+	isAnimating = true
 	for _, t in ipairs(tweens) do t:Play() end
+	task.delay(tweenInfo.Time, function()
+		isAnimating = false
+	end)
 
 	TextBox.Text = ""
 	TextBox:CaptureFocus()
 end
 
+
 local function closeBar()
+	if isAnimating then return end
 	isOpen = false
 	TextBox.Text = ""
 
@@ -142,10 +158,18 @@ local function closeBar()
 		TweenService:Create(AmbientShadow, tweenInfo, { ImageTransparency = 1 }),
 	}
 
+	isAnimating = true
 	for _, t in ipairs(tweens) do t:Play() end
-	task.wait(0.9)
-	Main.Visible = false
+
+	closeTween = task.delay(tweenInfo.Time, function()
+		if not isOpen then
+			Main.Visible = false
+		end
+		isAnimating = false
+		closeTween = nil
+	end)
 end
+
 
 -- Toggle
 UIS.InputBegan:Connect(function(input, gpe)
@@ -623,7 +647,7 @@ function AutocompleteTypes.simple(func)
 	end
 end
 
-print("SimpleIndex Loaded - Version 1.1")
+print("SimpleIndex Loaded - Version 1.11")
 
 command("cmds", function(args)
 	print("===== Available Commands =====")
