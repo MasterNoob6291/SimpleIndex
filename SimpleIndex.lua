@@ -617,7 +617,7 @@ end
 
 command("cmds", function(args)
 	print("===== Available Commands =====")
-	for name, data in pairs(SimpleIndex.Commands) do
+	for name, data in pairs(Commands) do
 		print("- " .. name .. ": " .. data.description)
 	end
 	print("==============================")
