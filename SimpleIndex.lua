@@ -143,7 +143,7 @@ local function closeBar()
 	}
 
 	for _, t in ipairs(tweens) do t:Play() end
-	task.wait(2)
+	task.wait(0.9)
 	Main.Visible = false
 end
 
@@ -622,6 +622,8 @@ function AutocompleteTypes.simple(func)
 		return matches
 	end
 end
+
+print("SimpleIndex Loaded - Version 1.1")
 
 command("cmds", function(args)
 	print("===== Available Commands =====")
