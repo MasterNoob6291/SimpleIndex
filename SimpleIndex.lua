@@ -600,3 +600,11 @@ function AutocompleteTypes.simple(func)
 		return matches
 	end
 end
+
+return {
+    command = command,
+    Commands = Commands,
+    AutocompleteTypes = AutocompleteTypes,
+    Notify = Notify,
+    getTargetPlayers = getTargetPlayers
+}
