@@ -615,6 +615,14 @@ function AutocompleteTypes.simple(func)
 	end
 end
 
+command("cmds", function(args)
+	print("===== Available Commands =====")
+	for name, data in pairs(SimpleIndex.Commands) do
+		print("- " .. name .. ": " .. data.description)
+	end
+	print("==============================")
+end, "Lists all commands.")
+
 return {
     command = command,
     Commands = Commands,
