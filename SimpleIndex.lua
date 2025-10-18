@@ -631,6 +631,8 @@ command("cmds", function(args)
 	print("==============================")
 end, "Lists all commands.")
 
+print("SimpleIndex Loaded! - Version 1.1")
+
 return {
     command = command,
     Commands = Commands,
@@ -638,4 +640,3 @@ return {
     Notify = Notify,
     getTargetPlayers = getTargetPlayers
 }
-print("SimpleIndex Loaded! - Version 1.1")
