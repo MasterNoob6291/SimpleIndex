@@ -128,7 +128,7 @@ local function closeBar()
 	}
 
 	for _, t in ipairs(tweens) do t:Play() end
-	task.wait(1.1)
+	task.wait(2)
 	Main.Visible = false
 end
 
