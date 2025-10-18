@@ -435,7 +435,7 @@ local function showSuggestions(matches)
 		local label = Instance.new("TextLabel")
 		label.BackgroundTransparency = 0.4
 		-- Use scale in both X and Y
-		label.Size = UDim2.new(1, -8, 0.5, 60) -- Height 0 for now, will auto-size
+		label.Size = UDim2.new(1, -8, 0.5, 20) -- Height 0 for now, will auto-size
 		label.BackgroundColor3 = Color3.fromRGB(30, 31, 40)
 		label.Font = Enum.Font.Gotham
 		label.TextScaled = true
