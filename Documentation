@@ -1,0 +1,4 @@
+<hx>Index is a basic tool to help you with creating commands easily.</hx> Simple 
+
+Here is the module:
+local SimpleIndex = loadstring(game:HttpGet("https://raw.githubusercontent.com/MasterNoob6291/SimpleIndex/refs/heads/main/SimpleIndex.lua"))()
