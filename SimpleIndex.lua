@@ -1,4 +1,3 @@
---// CmdR-Style Command Bar w/ Command System
 local UIS = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local PlayerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -43,8 +42,8 @@ local function makeShadow(name, posY, sizeOffset, transparency, zindex)
 	img.Parent = MainCommandBar -- keep separate from Main
 	img.AnchorPoint = Vector2.new(0.5, 0.5)
 	img.BackgroundTransparency = 1
-	img.Position = UDim2.new(0.5, 0, 0.06, posY)
-	img.Size = UDim2.new(0.5, sizeOffset, 0.05, sizeOffset)
+	img.Position = UDim2.new(0.5, 0, 0.1, posY)
+	img.Size = UDim2.new(0.51, 0, 0.12, 0)
 	img.ZIndex = zindex
 	img.Image = "rbxassetid://1316045217"
 	img.ImageColor3 = Color3.fromRGB(0, 0, 0)
@@ -85,7 +84,7 @@ AmbientShadow.ImageTransparency = 1
 
 -- Animation
 local isOpen = false
-local tweenInfo = TweenInfo.new(0.35, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
 local floatOffset = -0.04
 local finalY = 0.05
 
@@ -129,7 +128,7 @@ local function closeBar()
 	}
 
 	for _, t in ipairs(tweens) do t:Play() end
-	task.wait(0.35)
+	task.wait(1.1)
 	Main.Visible = false
 end
 
