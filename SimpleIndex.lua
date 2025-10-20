@@ -572,7 +572,8 @@ end)
 UIS.InputBegan:Connect(function(input, gpe)
 	if not isOpen then return end
 	if input.KeyCode == Enum.KeyCode.Space then
-		if #currentMatches > 0 then
+		-- Only autocomplete if there are matches
+		if currentMatches and #currentMatches > 0 then
 			local text = TextBox.Text
 			local hasPrefix = text:sub(1, #PREFIX) == PREFIX
 			local content = hasPrefix and text:sub(#PREFIX + 1) or text
@@ -581,12 +582,13 @@ UIS.InputBegan:Connect(function(input, gpe)
 			local trailingSpace = content:sub(-1) == " "
 			local argIndex = trailingSpace and (#parts + 1) or #parts
 
-			-- Replace current argument with autocomplete
-			parts[argIndex] = currentMatches[1]
-
-			TextBox.Text = (hasPrefix and PREFIX or "") .. table.concat(parts, " ")
-			TextBox.CursorPosition = #TextBox.Text + 1
-			showSuggestions({})
+			-- Only replace current argument if a match exists
+			if currentMatches[1] then
+				parts[argIndex] = currentMatches[1]
+				TextBox.Text = (hasPrefix and PREFIX or "") .. table.concat(parts, " ")
+				TextBox.CursorPosition = #TextBox.Text + 1
+				showSuggestions({})
+			end
 		end
 	end
 end)
@@ -647,7 +649,7 @@ function AutocompleteTypes.simple(func)
 	end
 end
 
-print("SimpleIndex Loaded - Version 1.11")
+print("SimpleIndex Loaded - Version 1.12")
 
 command("cmds", function(args)
 	print("===== Available Commands =====")
