@@ -508,6 +508,7 @@ TextBox:GetPropertyChangedSignal("Text"):Connect(function()
 	local text = TextBox.Text
 	if text == "" or text:sub(1, #PREFIX) ~= PREFIX then
 		SuggestionFrame.Visible = false
+		currentMatches = {}
 		return
 	end
 
@@ -525,6 +526,7 @@ TextBox:GetPropertyChangedSignal("Text"):Connect(function()
 
 	if not cmd then
 		showSuggestions({})
+		currentMatches = {}
 		return
 	end
 
@@ -536,6 +538,7 @@ TextBox:GetPropertyChangedSignal("Text"):Connect(function()
 	-- Stop suggesting if past defined autocomplete arguments
 	if argIndex - 1 > #cmd.autocomplete then
 		showSuggestions({})
+		currentMatches = {}
 		return
 	end
 
@@ -563,9 +566,12 @@ TextBox:GetPropertyChangedSignal("Text"):Connect(function()
 
 		showSuggestions(currentMatches)
 	else
+		-- No autocomplete for this command → clear matches
+		currentMatches = {}
 		showSuggestions({})
 	end
 end)
+
 
 
 -- SPACE AUTOFILL
@@ -649,7 +655,7 @@ function AutocompleteTypes.simple(func)
 	end
 end
 
-print("SimpleIndex Loaded - Version 1.12")
+print("SimpleIndex Loaded - Version 1.13")
 
 command("cmds", function(args)
 	print("===== Available Commands =====")
